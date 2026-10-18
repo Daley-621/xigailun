@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>习近平新时代中国特色社会主义思想概论 · 选择题题库</title>
+<style>
+  :root{
+    --green:#22c55e; --green-bg:#dcfce7;
+    --red:#ef4444; --red-bg:#fee2e2;
+    --gray:#6b7280; --line:#e5e7eb;
+    --brand:#c62828; --brand-bg:#fbe9e7;
+    --ink:#1f2937; --bg:#f6f7f9;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+    background:var(--bg); color:var(--ink); min-height:100vh;
+  }
+  header{
+    background:linear-gradient(135deg,#b71c1c,#e53935);
+    color:#fff; padding:14px 20px; position:sticky; top:0; z-index:20;
+    box-shadow:0 2px 8px rgba(0,0,0,.12);
+  }
+  .hd-in{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .hd-title{font-size:17px;font-weight:700;line-height:1.3;}
+  .hd-sub{font-size:12px;opacity:.9;margin-top:2px;}
+  .tabs{margin-left:auto;display:flex;gap:8px;}
+  .tab{
+    border:1px solid rgba(255,255,255,.5); background:rgba(255,255,255,.12); color:#fff;
+    padding:6px 14px; border-radius:999px; font-size:13px; cursor:pointer; user-select:none;
+  }
+  .tab.active{background:#fff;color:#c62828;font-weight:700;border-color:#fff;}
+  .badge{background:#ffca28;color:#5d4037;border-radius:999px;padding:1px 7px;font-size:12px;font-weight:700;margin-left:4px;}
+  .tab.active .badge{background:#c62828;color:#fff;}
+
+  .wrap{max-width:860px;margin:0 auto;padding:18px 16px 60px;}
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;
+    box-shadow:0 1px 3px rgba(0,0,0,.05);
+  }
+  .prog{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px;font-size:13px;color:var(--gray);}
+  .prog .bar{flex:1;min-width:120px;height:8px;background:#e5e7eb;border-radius:999px;overflow:hidden;}
+  .prog .bar i{display:block;height:100%;background:var(--brand);border-radius:999px;transition:width .3s;}
+  .prog .stat{white-space:nowrap;}
+  .prog .ok{color:var(--green);font-weight:600;}
+  .prog .no{color:var(--red);font-weight:600;}
+
+  .jump{display:inline-flex;align-items:center;gap:6px;margin-left:auto;}
+  .jump select{padding:5px 8px;border:1px solid var(--line);border-radius:8px;font-size:13px;}
+
+  .qno{font-size:13px;color:#fff;background:var(--brand);border-radius:999px;padding:3px 12px;display:inline-block;margin-bottom:12px;font-weight:700;}
+  .stem{font-size:17px;line-height:1.75;margin-bottom:20px;font-weight:500;}
+  .opts{display:flex;flex-direction:column;gap:12px;}
+  .opt{
+    display:flex;align-items:flex-start;gap:12px;text-align:left;
+    border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:13px 16px;
+    font-size:15px;line-height:1.6;cursor:pointer;transition:.15s;color:var(--ink);
+  }
+  .opt:hover{border-color:#f06292;background:#fff5f7;}
+  .opt .key{
+    flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:1.5px solid #cbd5e1;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#64748b;
+  }
+  .opt.correct{border-color:var(--green);background:var(--green-bg);color:#166534;}
+  .opt.correct .key{border-color:var(--green);background:var(--green);color:#fff;}
+  .opt.wrong{border-color:var(--red);background:var(--red-bg);color:#991b1b;}
+  .opt.wrong .key{border-color:var(--red);background:var(--red);color:#fff;}
+  .opt.dim{opacity:.5;border-color:var(--line);background:#fafafa;}
+  .opt.disabled{cursor:default;}
+  .opt.disabled:hover{border-color:var(--line);background:#fff;}
+
+  .feedback{margin-top:18px;padding:14px 16px;border-radius:12px;font-size:15px;font-weight:600;display:none;}
+  .feedback.right{background:var(--green-bg);color:#166534;border:1px solid #86efac;display:block;}
+  .feedback.wrong{background:var(--red-bg);color:#991b1b;border:1px solid #fca5a5;display:block;}
+  .feedback .truenote{font-weight:500;margin-top:6px;font-size:13px;color:#6b7280;}
+
+  .actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap;}
+  .btn{
+    border:none;border-radius:12px;padding:13px 22px;font-size:15px;font-weight:700;cursor:pointer;transition:.15s;
+  }
+  .btn:disabled{opacity:.45;cursor:not-allowed;}
+  .btn-next{background:var(--brand);color:#fff;}
+  .btn-next:hover{background:#9a0000;}
+  .btn-book{background:#fff;color:var(--brand);border:1.5px solid var(--brand);}
+  .btn-book:hover{background:var(--brand-bg);}
+  .btn-book.inbook{background:#e5e7eb;color:var(--gray);border-color:#d1d5db;}
+  .btn-ghost{background:#fff;color:var(--gray);border:1.5px solid #d1d5db;}
+  .btn-ghost:hover{background:#f3f4f6;}
+  .btn-remove{background:#fff;color:var(--red);border:1.5px solid var(--red);}
+  .btn-remove:hover{background:var(--red-bg);}
+
+  .empty{text-align:center;padding:50px 20px;color:var(--gray);font-size:15px;}
+  .empty .big{font-size:44px;margin-bottom:12px;}
+
+  .summary{text-align:center;padding:20px 10px;}
+  .summary .n{font-size:48px;font-weight:800;color:var(--brand);}
+  .summary .rate{font-size:20px;color:var(--gray);margin:8px 0 20px;}
+
+  .mini-tool{background:none;border:none;color:rgba(255,255,255,.85);cursor:pointer;font-size:13px;text-decoration:underline;}
+  .admin{position:fixed;right:16px;bottom:16px;z-index:30;}
+  .admin-panel{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:40;}
+  .admin-panel.show{display:flex;}
+  .admin-box{background:#fff;border-radius:16px;max-width:560px;width:92%;max-height:85vh;overflow:auto;padding:22px;}
+  .admin-box h3{margin-top:0;color:var(--brand);}
+  .admin-row{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap;}
+  .admin-row input,.admin-row select{padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:14px;flex:1;}
+  .admin-row label{font-size:13px;color:var(--gray);min-width:70px;}
+  .admin-note{font-size:12px;color:var(--gray);margin-top:14px;line-height:1.7;}
+  .btn-sm{padding:8px 14px;font-size:13px;border-radius:8px;border:none;cursor:pointer;background:var(--brand);color:#fff;}
+  .btn-sm.gray{background:#e5e7eb;color:var(--ink);}
+
+  .list-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+  .list-head h2{margin:0;font-size:18px;}
+  .adminbtn{border:1px solid #fff;background:rgba(255,255,255,.25);}
+  .adminbtn:hover{background:rgba(255,255,255,.35);}
+  .timer{font-size:26px;font-weight:800;color:var(--brand);font-variant-numeric:tabular-nums;}
+  .testbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px;font-size:13px;color:var(--gray);}
+  .scorebig{font-size:52px;font-weight:800;color:var(--brand);}
+  .note-line{font-size:13px;color:var(--gray);line-height:1.8;}
+  table.hist{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px;}
+  table.hist th,table.hist td{border:1px solid var(--line);padding:9px 10px;text-align:center;}
+  table.hist th{background:#faf0ee;color:var(--brand);font-weight:700;}
+  .hist-actions{display:flex;gap:8px;justify-content:center;}
+  .btn-del{background:#fff;color:var(--red);border:1px solid var(--red);padding:4px 10px;border-radius:8px;font-size:12px;cursor:pointer;}
+  .btn-del:hover{background:var(--red-bg);}
+  footer{text-align:center;color:#9ca3af;font-size:12px;padding:20px;line-height:1.8;}
+</style>
+</head>
+<body>
+<header>
+  <div class="hd-in">
+    <div>
+      <div class="hd-title">习近平新时代中国特色社会主义思想概论 · 选择题题库</div>
+      <div class="hd-sub">共 150 题 · 答错自动进错题本 · 本地保存</div>
+    </div>
+    <div class="tabs">
+      <div class="tab active" id="tabPractice" onclick="switchView('practice')">全部练习</div>
+      <div class="tab" id="tabWrong" onclick="switchView('wrong')">错题本<span class="badge" id="wrongBadge">0</span></div>
+      <button class="tab adminbtn" onclick="toggleAdmin()">✎ 改答案</button>
+      <div class="tab" id="tabTest" onclick="switchView('test')">限时自测</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" id="practiceView">
+  <div class="prog">
+    <span id="progText">第 1 / 150 题</span>
+    <span class="bar"><i id="progBar" style="width:0%"></i></span>
+    <span class="stat">答对 <span class="ok" id="statOk">0</span> · 答错 <span class="no" id="statNo">0</span></span>
+    <span class="jump">跳题 <select id="jumpSel" onchange="jumpTo(this.value)"></select></span>
+  </div>
+  <div class="card">
+    <div id="qCard"></div>
+  </div>
+</div>
+
+<div class="wrap" id="wrongView" style="display:none">
+  <div class="list-head">
+    <h2>错题本</h2>
+    <button class="btn btn-ghost" id="clearWrongBtn" onclick="clearWrong()">清空错题本</button>
+    <span style="margin-left:auto;font-size:13px;color:var(--gray)" id="wrongInfo"></span>
+  </div>
+  <div id="wrongCard"></div>
+</div>
+
+<div class="wrap" id="testView" style="display:none">
+  <div id="testCard"></div>
+</div>
+
+<footer>答案由用户提供 · 可在右上角「✎ 改答案」逐题修改正确答案<br>限时自测为随机 20 题 · 每题 1 分 · 正计时记录用时<br>数据保存在本地浏览器（localStorage），清除浏览器数据会丢失错题本、成绩与进度</footer>
+
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-box">
+    <h3>⚙ 修改题目答案</h3>
+    <div class="admin-row">
+      <label>题号</label>
+      <select id="adminQ"></select>
+    </div>
+    <div class="admin-row">
+      <label>正确答案</label>
+      <select id="adminA"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
+    </div>
+    <div class="admin-row">
+      <button class="btn-sm" onclick="saveAdmin()">保存修改</button>
+      <button class="btn-sm gray" onclick="toggleAdmin()">关闭</button>
+    </div>
+    <div class="admin-note">
+      当前显示的是你提供的答案。如需核对/修改某题，选择题号后调整正确选项并保存。<br>
+      特别提醒：第 149 题（政治建设首要任务）、第 150 题（自我革新）与你给的答案可能需复核。
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== 题库数据：q 题干, o 四个选项(A-D), a 正确选项下标(0=A,1=B,2=C,3=D) ===== */
+const QUESTIONS = [
+{q:"党的二十大提出的（ ），是习近平新时代中国特色社会主义思想的世界观、方法论和贯穿其中的立场观点方法的重要体现。",o:["“三个务必”","“六个必须坚持”","“五个必由之路”","中国式现代化"],a:1},
+{q:"（ ）是中国共产党人的境界格局，体现了马克思主义追求人类进步和解放的崇高理想。",o:["坚持胸怀天下","坚持守正创新","坚持问题导向","坚持系统观念"],a:0},
+{q:"习近平新时代中国特色社会主义思想内容十分丰富，涵盖改革发展稳定、内政外交国防、治党治国治军等各个领域、各个方面，构成了一个系统完整、逻辑严密、相互贯通的思想理论体系。习近平新时代中国特色社会主义思想的主体内容是（ ）。",o:["“四个全面”","“十四个坚持”","“十个明确”","“四个伟大”"],a:2},
+{q:"中国特色社会主义的战略布局是（ ）。",o:["“十个明确”","“十四个坚持”","“四个全面”","“五位一体”"],a:2},
+{q:"世界未有之大变局正在加速演变。（ ）仍然是时代主题，但是不稳定不确定性更加突出。",o:["发展与共享","和平与融合","开放与包容","和平与发展"],a:3},
+{q:"马克思主义中国化时代化的最新成果是（ ）。",o:["习近平新时代中国特色社会主义思想","毛泽东思想","邓小平理论","“三个代表”重要思想"],a:0},
+{q:"进入新时代的重要依据是（ ）。",o:["发展不平衡","社会主要矛盾变化","发展不充分","社会基本矛盾变化"],a:1},
+{q:"提出人与自然和谐共生的生命共同体，绿水青山就是金山银山，是对（ ）的新发展。",o:["马克思主义自然观","马克思主义社会矛盾学说","马克思主义认识论","马克思主义国家学说"],a:0},
+{q:"新时代十年的伟大变革，在党史、新中国史、改革开放史、社会主义发展史、（ ）上具有里程碑意义。",o:["共和国史","中华民族发展史","人类文明发展史","社会主义建设史"],a:1},
+{q:"三大时代课题是理解习近平新时代中国特色社会主义思想的“理论之眼”，其中（ ）回答的是方向性问题。",o:["新时代坚持和发展什么样的社会主义、怎样坚持和发展社会主义","新时代坚持和发展什么样的中国特色社会主义、怎样坚持和发展中国特色社会主义","建设什么样的社会主义现代化强国、怎样建设社会主义现代化强国","建设什么样的长期执政的马克思主义政党、怎样建设长期执政的马克思主义政党"],a:1},
+{q:"改革开放以来我们取得一切成绩和进步的根本原因，归结起来就是：开辟了中国特色社会主义道路，形成了中国特色社会主义理论体系，确立了中国特色社会主义制度，发展了中国特色社会主义文化。其中，中国特色社会主义道路是（ ）。",o:["根本保障","行动指南","实现途径","精神力量"],a:2},
+{q:"（ ）吸收了“协和万邦”“天下一家”的和合智慧。",o:["坚持以人民为中心","全面深化改革","人与自然和谐共生","推动构建人类命运共同体"],a:3},
+{q:"中国特色社会主义进入新时代，我国社会主要矛盾已经转化为人民日益增长的____需要和____的发展之间的矛盾。",o:["美好生活、不充分不平衡","幸福生活、不平衡不充分","幸福生活、不充分不平衡","美好生活、不平衡不充分"],a:3},
+{q:"必须认识到，我国社会主要矛盾的变化，没有改变我们对我国社会主义所处历史阶段的判断，我国仍处于并将长期处于（ ）的基本国情没有变，我国是世界最大发展中国家的国际地位没有变。",o:["社会主义阶段","社会主义初级阶段","社会主义中级阶段","社会主义高级阶段"],a:1},
+{q:"（ ）是更基础、更广泛、更深厚的自信，是一个国家、一个民族发展中最基本、最深沉、最持久的力量。",o:["道路自信","理论自信","制度自信","文化自信"],a:3},
+{q:"（ ）是我国发展新的历史方位，标志着中国特色社会主义事业进入了新的发展阶段。",o:["新时代","新阶段","新发展","新时期"],a:0},
+{q:"（ ）是国家的生命线、人民的幸福线。",o:["党的基本路线","党的基本方略","党的基本理论","党的群众路线"],a:0},
+{q:"新时代新征程中国共产党的中心任务，就是团结带领全国各族人民（ ）、实现第二个百年奋斗目标，以中国式现代化全面推进中华民族伟大复兴。",o:["全面建成小康社会","全面建设现代化强国","全面建成社会主义现代化强国","基本实现现代化"],a:2},
+{q:"（ ）是近代以来中国人民的共同梦想，是中国共产党矢志不渝的奋斗目标。",o:["社会主义现代化建设","中国特色社会主义","国家富强民族振兴","实现中华民族伟大复兴"],a:3},
+{q:"中国式现代化既基于自身国情、又借鉴各国经验，既传承历史文化、又融合现代文明，是具有中国特色、符合中国实际的现代化，是强国建设、民族复兴的唯一正确道路。中国式现代化区别于西方现代化的显著标志是（ ）。",o:["全体人民共同富裕","人口规模巨大","物质文明和精神文明相协调","人与自然和谐共生"],a:0},
+{q:"中国特色社会主义最本质的特征是（ ）。",o:["中国共产党的领导","社会主义初级阶段","中国特色社会主义","人民为中心"],a:0},
+{q:"共同富裕是社会主义的本质要求，是中国式现代化的重要特征。党的十九届五中全会对扎实推动共同富裕作出了重大战略部署，明确提出了推动共同富裕的2035年远景目标，这一目标是（ ）。",o:["全体人民共同富裕基本实现","全体人民共同富裕取得更为明显的实质性进展","全体人民共同富裕全面实现","全体人民共同富裕同步实现"],a:1},
+{q:"习近平总书记在中国共产党与世界政党高层对话会上的主旨讲话指出：一个国家走向现代化，既要（ ），更要立足本国国情，具有本国特色。",o:["促进物质文明与精神文明协调发展","实现人与自然和谐共生","推动全体人民共同富裕","遵循现代化一般规律"],a:3},
+{q:"中国的现代化建设不能完全照搬西方国家的现代化模式。这是因为独特的（ ）共同决定中国必然走适合自己特点的现代化道路。",o:["伦理、道德、习俗","法律、哲学、文明","习俗、文化、制度","文化传统、历史命运、基本国情"],a:3},
+{q:"（ ）把我国建成富强民主文明和谐美丽的社会主义现代化强国。",o:["从2020年到2035年","从2020年到2045年","从2035年到2050年","从2035年到本世纪中叶"],a:3},
+{q:"（ ）是中国特色社会主义制度的最大优势，是党和国家各项事业发展的根本政治保证。",o:["党的作用","党的地位","党的形象","党的领导"],a:3},
+{q:"维护（ ），是一个成熟的马克思主义执政党的重大建党原则。",o:["中国特色社会主义制度","人民当家作主","全面依法治国","党中央权威和集中统一领导"],a:3},
+{q:"我国社会主义政治制度优越性的一个突出特点是党总揽全局、协调各方的领导核心作用，形象地说是“众星捧月”，这个“月”就是（ ）。",o:["人民","工人","知识分子","中国共产党"],a:3},
+{q:"中国共产党是以（ ）为党的根本组织原则和领导制度的马克思主义政党。",o:["社会主义","民主集中制","政治协商制度","党内监督"],a:1},
+{q:"习近平指出：“一定要认清，中国最大的国情就是（ ）。什么是中国特色？这就是中国特色。”",o:["人口14亿","中国共产党的领导","人均GDP世界第二","吃饭是个山大的问题"],a:1},
+{q:"（ ）是马克思主义政党第一位的能力。",o:["政治领导力","思想引领力","群众组织力","社会号召力"],a:0},
+{q:"（ ）是中国特色社会主义制度优势的主要来源。",o:["中国共产党的自身优势","科学社会主义","社会主义改革开放","“两个一百年”"],a:0},
+{q:"（ ）是中国特色社会主义最本质的特征。",o:["以经济建设为中心","以人为本","“五位一体”总体布局","中国共产党的领导"],a:3},
+{q:"（ ）是马克思主义的本质属性和鲜明品格。",o:["实事求是","科学社会主义","实践","人民性"],a:3},
+{q:"坚持以人民为中心，体现了（ ）基本原理，是我们党总结历史经验、把握历史规律得出的重要结论。",o:["历史唯物主义","辩证唯物主义","科学社会主义","人类社会发展规律"],a:0},
+{q:"（ ）是中国共产党的根本政治立场，是我们党区别于其他政党的显著标志。",o:["人民代表大会制度","人民立场","人民当家作主","民主集中制"],a:1},
+{q:"依靠人民创造历史伟业，必须尊重（ ）地位。",o:["人民主体","党的领导","法治中国","人民群众"],a:0},
+{q:"习近平指出：“（ ）是我们党的生命线和根本工作路线，是我们党永葆青春活力和战斗力的重要传家宝。”",o:["群众路线","思想路线","组织路线","政治路线"],a:0},
+{q:"江山就是人民，人民就是江山深刻揭示了（ ）。",o:["人民与政权之间的辩证关系","人民与政府之间的辩证关系","人民与中国共产党之间的辩证关系","人民与国家主权之间的辩证关系"],a:0},
+{q:"下面关于“在中国共产党领导的社会主义中国，党性与人民性”的观点表述错误的是（ ）。",o:["党性寓于人民性之中","党性和人民性是一致的、统一的","党性高于人民性","没有脱离人民性的党性，也没有脱离党性的人民性"],a:2},
+{q:"把人民对美好生活的向往作为奋斗目标，从根本上回答了（ ）的问题，是立党为公、执政为民的生动体现，是共产党人始终坚守的政治灵魂和精神支柱。",o:["“满足谁”","“为了谁”","“需要谁”","“依靠谁”"],a:1},
+{q:"（ ）是新时代坚持和发展中国特色社会主义的根本立场，是贯穿党治国理政全部活动的一条红线。",o:["把马克思主义基本原理与中国国情相结合","坚持以人民为中心","坚持和发展中国特色社会主义","“五位一体”总体布局"],a:1},
+{q:"（ ）是决定当代中国命运的关键一招，也是决定实现“两个一百年”奋斗目标、实现中华民族伟大复兴的关键一招。",o:["中国式现代化","中国特色社会主义","改革开放","小康社会"],a:2},
+{q:"我国全面深化改革的总目标是（ ）。",o:["完善和发展中国特色社会主义制度、推进国家治理体系和治理能力现代化","坚持和完善党的领导、坚持和完善中国特色社会主义制度","坚持和完善党的领导、推进国家治理体系和治理能力现代化","坚持党的领导、发展全过程人民民主"],a:0},
+{q:"（ ）是开启改革开放事业的思想前提，也是新时代全面深化改革开放的思想前提。",o:["解放思想","实事求是","与时俱进","开拓创新"],a:0},
+{q:"（ ）是一个国家现代化的重要标志。",o:["国家治理体系和治理能力现代化","实现全体人民共同富裕","社会主义大繁荣大发展","进入世界发达国家行列"],a:0},
+{q:"（ ）是新时代坚持和发展中国特色社会主义的根本动力。",o:["全面深化改革开放","共同富裕","中华民族伟大复兴","社会主义现代化强国"],a:0},
+{q:"历史唯物主义认为，（ ）是推动人类社会发展最活跃最具有革命性的因素。",o:["生产力","党的领导","社会变革","人民群众"],a:0},
+{q:"坚持和完善社会主义基本经济制度，充分发挥（ ）在资源配置中的决定性作用，更好发挥政府作用。",o:["市场","社会","政府","组织"],a:0},
+{q:"中国坚持对外开放的基本国策，坚定奉行（ ）的开放战略。",o:["互利共赢","不结盟","“一带一路”倡议","构建人类命运共同体"],a:0},
+{q:"坚持和完善中国特色社会主义制度、推进国家治理体系和治理能力现代化，不仅要建立完善的制度体系，还要在不断提高（ ）上狠下功夫。",o:["民主与法治","制度创新和社会和谐","社会发展和经济增速","制度执行力和治理能力"],a:3},
+{q:"党的十九大提出，到（ ）“各方面制度更加完善，国家治理体系和治理能力现代化基本实现”。",o:["2035年","2030年","2025年","2020年"],a:0},
+{q:"（ ）是新时代我国经济社会发展的鲜明主题，是全面建设社会主义现代化国家的首要任务。",o:["改革开放","法治中国建设","高质量发展","新发展格局"],a:2},
+{q:"（ ）是中国特色社会主义制度的重要支柱，是新时代推动实现高质量发展的制度基础。",o:["社会主义基本经济制度","社会主义分配制度","社会主义市场经济体制","社会主义所有制"],a:0},
+{q:"（ ）是一国经济的立身之本、财富之源，是构筑未来发展战略优势的重要支撑。",o:["实体经济","虚拟经济","数字经济","集体经济"],a:0},
+{q:"构建新发展格局，是以习近平同志为核心的党中央积极应对国际国内环境变化、与时俱进提升我国经济发展水平、塑造国际经济合作和竞争新优势作出的战略抉择。这一新发展格局是（ ）。",o:["以国内大循环为主体、国内国际双循环相互促进","以体制机制创新为主体、利用好国际国内两个市场","以维护产业链、供应链稳定为主体、促进国内经济复苏","以发展先进制造业为主体、促进产业结构优化升级"],a:0},
+{q:"实体经济是一国经济的立身之本和财富之源，是国家强盛的重要支柱。党的十九大报告指出：建设现代化经济体系必须着力发展实体经济，全面提升实体经济发展水平。我国全面提升实体经济的重点是（ ）。",o:["加快发展先进制造业","深化要素市场化配置改革","加快人力资本培养力度","持续推进“三去一降一补”"],a:0},
+{q:"（ ）的新发展理念，相互贯通、相互促进，是具有内在联系的集合体，要统一贯彻，不能顾此失彼，也不能互相代替。",o:["创新、合作、绿色、发展、共赢","创新、合作、绿色、发展、共享","创新、协调、合作、开放、共赢","创新、协调、绿色、开放、共享"],a:3},
+{q:"（ ）是我国发展的战略目标，是推动高质量发展、全面提高经济整体竞争力的必然要求。",o:["坚持中国特色社会主义经济","全面深化改革","供给侧结构性改革","建设现代化经济体系"],a:3},
+{q:"在新发展理念中，（ ）注重解决的是社会公平正义问题。",o:["创新发展","协同发展","开放发展","共享发展"],a:3},
+{q:"坚持教育强国、科技强国、人才强国一体推进，就能为全面推进中国式现代化开辟发展新领域新赛道、塑造发展新动能新优势，为全面建设社会主义现代化强国奠定更为坚实的基础。实施科教兴国战略，要摆在优先发展的战略地位的是（ ）。",o:["科技","教育","人才","技术"],a:1},
+{q:"经过长期努力，我国已建成世界上规模最大的教育体系，教育现代化发展总体水平跨入世界中上国家行列。发展教育的根本尺度是（ ）。",o:["政府满意","教师满意","人民满意","学生满意"],a:2},
+{q:"教育兴则国家兴，教育强则国家强，只有把教育搞上去，才能培养高素质人才，才能从根本上增强国家的综合国力。教育的根本任务是（ ）。",o:["重视心智","重视成绩","重视特长","立德树人"],a:3},
+{q:"（ ）是国家强盛和民族复兴的战略基石，也是构建新发展格局、推动高质量发展、满足人民美好生活需要的内在要求。",o:["建立强大的人民军队","建立高水平人才队伍","实现高质量教育","实现高水平科技自立自强"],a:3},
+{q:"2021年9月27日至28日，中央人才工作会议在北京举行。中共中央总书记习近平出席会议并发表重要讲话，强调要坚持党管人才，坚持面向世界科技前沿、面向经济主战场、面向国家重大需求、面向人民生命健康，深入实施新时代人才强国战略，全方位培养、引进、用好人才，加快建设（ ）。",o:["世界重要人才中心和创新高地","北京、上海、粤港澳大湾区高水平人才高地","一批国家实验室和新型研发机构","中心城市吸引和聚集人才的平台"],a:0},
+{q:"创新是引领发展的第一动力，必须把创新摆在我国现代化建设全局的核心地位。2020年9月11日，习近平在《在科学家座谈会上的讲话》中指出，我国经济社会发展和民生改善比过去任何时候都更加需要增强创新这个第一动力，努力实现更多“从0到1”的突破。实现这一突破需要摆在更加突出位置的是（ ）。",o:["强化企业创新主体地位","加快推进引进消化吸收再创新","提升原始创新能力","改善科技创新生态"],a:2},
+{q:"全面建设社会主义现代化国家，教育是根本，科技是（ ），人才是基础。",o:["核心","动力","前提","关键"],a:3},
+{q:"落实立德树人根本任务，必须着力解决好培养什么人、怎样培养人、为谁培养人的问题。因为育人的根本在于（ ）。",o:["立志","修心","齐家","立德"],a:3},
+{q:"在着力解决好培养什么人的问题上，习近平总书记指出：“社会主义建设者和接班人的定语是‘社会主义’，这是对培养什么人的（ ）规定。”",o:["关键","本质","精髓","内核"],a:1},
+{q:"中国特色社会主义政治制度是由根本政治制度、基本政治制度、重要政治制度等组成的制度体系。下列选项中，属于根本政治制度的是（ ）。",o:["中国共产党领导的多党合作和政治协商制度","民族区域自治制度","基层群众自治制度","人民代表大会制度"],a:3},
+{q:"全过程人民民主是社会主义民主政治的本质属性，下列对全过程人民民主本质表述正确的是（ ）。",o:["过程民主与成果民主的统一","程序民主与形式民主的统一","直接民主与间接民主的分制","人民民主与国家意志的背离"],a:0},
+{q:"全过程人民民主是最广泛、最真实、最管用的民主。下列关于全过程人民民主的说法正确的是（ ）",o:["全过程人民民主只是程序民主，不注重实质","全过程人民民主只是间接民主，没有直接民主","全过程人民民主是全链条、全方位、全覆盖的民主","全过程人民民主只适用于特定领域，不是全方位的"],a:2},
+{q:"统一战线是凝聚人心、汇聚力量的强大法宝。关于统一战线，下列说法正确的是（ ）。",o:["统一战线是中国共产党夺取革命胜利的唯一法宝","统一战线工作范围不包括宗教界人士","统一战线工作的本质要求是大团结大联合","统一战线工作对象不包括党外人士"],a:2},
+{q:"2019年9月20日，习近平在中央政协工作会议暨庆祝中国人民政治协商会议成立70周年大会上的讲话中，提出了新时代加强和改进人民政协工作的总体要求，指出新时代做好人民政协工作的中心环节是（ ）。",o:["提高政治协商、民主监督、参政议政水平","加强思想政治引领，广泛凝聚共识","发挥人民政协专门协商机构作用","强化政协委员责任担当"],a:1},
+{q:"实行人民民主，保证人民当家作主，实现形式是丰富多样的。经过长期探索，我国在通过依法选举让人民的代表来参与国家生活和社会生活管理的同时，找到了一种保证人民在日常政治生活中有广泛持续深入参与权利的特有民主形式，这一特有民主形式是（ ）。",o:["谈判民主","协商民主","票决民主","竞争性民主"],a:1},
+{q:"我国的全过程人民民主是全链条、全方位、（ ）的民主。",o:["全监督","全覆盖","全参与","全贯通"],a:1},
+{q:"（ ）是社会主义的生命，没有民主就没有社会主义。",o:["人民民主","人民当家作主","以人民为中心","坚持人民主体地位"],a:0},
+{q:"社会主义民主的实质是（ ）。",o:["民主集中制","人民当家作主","人民代表大会制度","中华民族大团结"],a:1},
+{q:"（ ）是坚持和发展中国特色社会主义的本质要求和重要保障，必须坚持党的领导，坚持中国特色社会主义制度，贯彻中国特色社会主义法治理论。",o:["全面依法治国","全过程人民民主","共享发展理念","全面深化改革"],a:0},
+{q:"中国特色社会主义法治体系，本质上是（ ）。",o:["全面依法治国的总目标","中国特色社会主义制度的法律表现形式","中国特色社会主义治理体系","中国特色社会主义治理能力"],a:1},
+{q:"全面推进依法治国，涉及立法、执法、司法、守法等各个方面，涉及中国特色社会主义事业“五位一体”总体布局的各个领域，必须加强顶层设计、统筹谋划，在实际工作中必须有一个总揽全局、牵引各方的总抓手。全面依法治国的总抓手是（ ）。",o:["坚持依法治国和以德治国相结合","建设中国特色社会主义法治体系","坚持有法可依、有法必依、执法必严、违法必究","坚持科学立法、严格执法、公正司法、全民守法"],a:1},
+{q:"党的十八大以来，以习近平同志为核心的党中央从坚持和发展中国特色社会主义的全局和战略高度（ ），把全面依法治国纳入“四个全面”战略布局，推动建设社会主义法治国家取得历史性成就。",o:["系统法治、集成法治、定位法治","布局法治、提升法治、完善法治","定位法治、布局法治、厉行法治","强化法治、厉行法治、提升法治"],a:2},
+{q:"完善中国特色社会主义法律体系，要抓住立法质量这个关键，深入推进（ ）。",o:["科学立法、民主立法、依法立法","系统立法、科学立法、道德立法","民主立法、专业立法、快速立法","组织立法、依法立法、部门立法"],a:0},
+{q:"中国特色社会主义法治理论是中国特色社会主义法治体系的理论指导和学理支撑，是全面推进依法治国的（ ）。",o:["行动指南","科学指导","规律认识","根本保障"],a:0},
+{q:"（ ）是国家的根本法，是治国安邦的总章程，是党和人民意志的集中体现，是国家各种规章制度和法律法规的总依据。",o:["刑法","民法","行政法","宪法"],a:3},
+{q:"（ ）是中国特色社会主义法治之魂，是我们的法治同西方资本主义国家的法治最大的区别。",o:["坚持从中国实际出发","坚持法律面前人人平等","坚持中国共产党的领导","坚持法律和道德相辅相成"],a:2},
+{q:"（ ）把涉及国家、社会、公民的价值要求融为一体，回答了我们要建设什么样的国家、建设什么样的社会、培育什么样的公民的重大问题。",o:["社会主义文化发展道路","社会主义核心价值观","社会主义文化自信","文化体制机制改革"],a:1},
+{q:"文艺是民族精神的火炬，是时代前进的号角。社会主义文艺是人民的文艺，文艺和文艺工作的出发点和落脚点是（ ）。",o:["满足人民物质生活需求","满足人民精神文化需求","满足人民政治生活需求","满足人民生态文明需求"],a:1},
+{q:"（ ）是文化的生命所在，是文化的本质特征。",o:["创新创造","统一性","包容性","互鉴性"],a:0},
+{q:"建设社会主义文化强国、推动社会主义文化繁荣兴盛，关键在于（ ）。",o:["坚持社会主义文化发展道路","积极践行社会主义核心价值观","坚定中国特色社会主义文化自信","深化文化体制机制改革"],a:2},
+{q:"新闻舆论工作有鲜明的意识形态属性，（ ）是做好新闻舆论工作的第一位要求。",o:["坚持正确的政治方向","坚持及时准确性","坚持中国特色社会主义","坚持实事求是原则"],a:0},
+{q:"文化软实力集中体现了一个国家基于文化而具有的凝聚力和生命力，以及由此产生的吸引力和影响力。提高国家文化软实力需要强大的国际传播能力。我国加强国际传播能力建设的重要任务是（ ）。",o:["加快发展新型文化业态","推进中华传统文化创造性转化、创新性发展","推进社会主义先进文化深入人心，激发全民族文化创造活力","讲好中国故事，传播好中国声音，展示真实、立体、全面的中国"],a:3},
+{q:"习近平在纪念五四运动100周年大会上的讲话中指出：“爱国主义是我们民族精神的核心，是中华民族团结奋斗、自强不息的精神纽带。”对每一个中国人来说，爱国是本分，也是职责，是心之所系、情之所归。对新时代中国青年来说，热爱祖国是立身之本、成才之基。当代中国爱国主义的本质就是（ ）。",o:["坚持爱国和爱党、爱社会主义高度统一","维护社会和谐和民族平等的统一","对民族和文化的归属感、认同感的统一","坚持立足民族和面向世界的统一"],a:0},
+{q:"2019年11月，中共中央、国务院印发的《新时代爱国主义教育实施纲要》指出，爱国主义是中华民族的民族心、民族魂，是中华民族最重要的精神财富，是中国人民和中华民族维护民族独立和民族尊严的强大精神动力。青少年进行爱国主义教育的主阵地是（ ）。",o:["手机和互联网","精品读物","思想政治理论课","传统节日纪念活动"],a:2},
+{q:"中华优秀传统文化是中华文明的智慧结晶和精华所在，是中华民族的根和魂。要坚持把马克思主义基本原理同中华优秀传统文化相结合，推动中华优秀传统文化创造性转化、（ ）。",o:["创新性发展","科学性发展","根本性发展","全面性发展"],a:0},
+{q:"社会保障是保障和改善民生、维护社会公平、增进人民福祉的基本制度保障，是促进经济社会发展、实现广大人民群众共享改革发展成果的重要制度安排，（ ）是新时代加强社会建设的重要着力点。",o:["健全和完善社会保障体系","保障和改善民生","坚持以人民为中心","人民健康"],a:0},
+{q:"发展是解决民生问题的“总钥匙”，民生是发展的“指南针”。要在发展过程中始终注重民生、保障民生、改善民生，根据经济发展和财力状况，逐步提高人民生活水平，让群众得到更多看得见、摸得着的实惠，不断厚植民生福祉。保障和改善民生的重要前提是（ ）。",o:["正确把握民生和发展的关系","坚守底线、突出重点、完善制度、引导预期","解决人民群众最关心最直接最现实的利益问题","坚持尽力而为、量力而行"],a:0},
+{q:"近年来，为了缩小我国居民在收入分配方面存在的差距，党和政府做出了巨大的努力，如提高个税起征点、提高企业退休人员基本养老金、提高国家扶贫标准和城乡低保补助水平等，这些举措体现了（ ）。",o:["初次分配注重效率","再次分配更加注重公平","劳动报酬在初次分配中比重提高","各种生产要素都能按贡献参与分配"],a:1},
+{q:"我国的社会主义建设坚持在发展中增进民生福祉，表现为在经济社会发展过程中注重民生、保障民生和改善民生。关于保障和改善民生需要坚持的重要方针表述准确的是（ ）。",o:["全力而为、急功近利","不顾实际、拼命干","尽力而为、量力而行","埋头苦干、实干巧干"],a:2},
+{q:"加强和创新社会治理，就是要在党的领导下，以政府为主导，以（ ）参与为基础，以维护人民群众根本利益为核心，推动社会稳定有序发展。",o:["个体","社会多元主体","企业","社会组织"],a:1},
+{q:"新时代加强和创新社会治理，探索符合中国社会发展实际、更可持续的中国特色社会主义治理之路，要坚持（ ）相结合。",o:["系统治理、依法治理、综合治理、源头治理","单一治理、依法治理、综合治理、源头治理","系统治理、依法治理、分散治理、源头治理","单一治理、依法治理、综合治理、重点治理"],a:0},
+{q:"社会治理是国家治理的重要领域，社会治理现代化是推进国家治理体系和治理能力现代化的重要内容。我国所要打造的社会治理新格局是（ ）。",o:["党委领导、政府负责、社会协同、公众参与、法治保障","政府治理和社会调节、居民自治良性互动","共建共治共享","社会化、法治化、智能化、专业化"],a:2},
+{q:"（ ）是关系中华民族永续发展的根本大计。",o:["生态文明建设","保护环境","绿色低碳","生物多样性"],a:0},
+{q:"应对生态环境挑战，必须摒弃“单边主义”“极端利己主义”“甩锅推责”，打造（ ）的全球生态治理体系。",o:["命运与共","携手合作","多元共治","美丽世界"],a:2},
+{q:"习近平指出：“绿色发展，就其要义来讲，是要解决好（ ）问题。”",o:["生态环境保护","人与自然和谐共生","生物多样性","美丽中国建设"],a:1},
+{q:"生态文明建设是重大经济问题，也是关系党的使命宗旨的重大政治问题、关系民生福祉的重大社会问题。在下列选项中，对高度重视生态文明建设表述最为准确的是（ ）。",o:["把生态文明建设摆在经济建设的首位","把生态文明建设摆在政治建设的首位","把生态文明建设摆在全局工作的突出位置","把生态文明建设摆在社会建设的首位"],a:2},
+{q:"习近平指出：“（ ）是最公平的公共产品，是最普惠的民生福祉。”",o:["生活环境","社会福利","土地","良好的生态环境"],a:3},
+{q:"（ ），是全面建设社会主义现代化国家的重要目标，也是满足人民日益增长的优美生态环境需要的必然要求。",o:["建设美丽中国","推进碳达峰碳中和","推动产业结构优化调整","推动各类资源节约集约利用"],a:0},
+{q:"大自然是人类赖以生存发展的基本条件，（ ）是全面建设社会主义现代化国家的内在要求。",o:["尊重自然、融入自然、改造自然","尊重自然、顺应自然、保护自然","顺应自然、改造自然、融入自然","融入自然、保护自然、尊重自然"],a:1},
+{q:"发达国家和发展中国家处于不同发展阶段，在环境问题上的历史责任和现实能力存在差异，因此要坚持（ ）的责任原则。",o:["完全一致的","有区别的","共同但有区别的","完全不一样的"],a:2},
+{q:"2014年4月15日，习近平总书记在中央国家安全委员会第一次会议上提出，要坚持总体国家安全观，走出一条中国特色国家安全道路。总体国家安全观是新时代国家安全工作的基本遵循。国家安全的根本是（ ）。",o:["经济安全","人民安全","政治安全","军事安全"],a:2},
+{q:"（ ）是应对国家安全形势新变化新趋势的战略选择，是全面贯彻落实总体国家安全观的重大举措。",o:["统筹稳定和发展","构建新发展格局","构建新安全格局","建立强大的军队"],a:2},
+{q:"坚定不移走中国特色国家安全道路，加快构建统筹各领域安全的新安全格局，统筹发展和安全，把维护（ ）放在首要位置，守好重点领域国家安全的主阵地、主战场。",o:["政治安全","军事安全","文化安全","经济安全"],a:0},
+{q:"构建统筹各领域安全的新安全格局，要聚焦重点、抓纲带目，统筹推进各重点领域国家安全工作。人民群众安全感的晴雨表是（ ）。",o:["国土安全","经济安全","社会安全","生物安全"],a:2},
+{q:"党的十八大以来，为了更好地适应我国国家安全面临的新形势新任务实现国家长治久安，我们党明确提出了总体国家安全观。总体国家安全观的宗旨是（ ）。",o:["政治安全","经济安全","人民安全","军事、文化、社会安全"],a:2},
+{q:"意识形态事关举什么旗、走什么路的重大问题，维护意识形态安全，就是要（ ）。",o:["落实意识形态工作责任制","及时掌握意识形态形势和动态","毫不动摇坚持和巩固马克思主义在意识形态领域的指导地位","毫不动摇坚持和完善人民代表大会制度"],a:2},
+{q:"制度稳则国家稳，维护制度安全，就是要（ ）。",o:["毫不动摇坚持和巩固马克思主义在意识形态领域的指导地位","毫不动摇坚持和完善人民代表大会制度","推进国家治理体系和治理能力现代化","毫不动摇坚持和完善中国特色社会主义制度"],a:3},
+{q:"（ ）是保障国家安全的治本之策。",o:["健全国家安全体系、加强国家安全制度建设","增强维护国家安全能力","增加经费投入","维护我国海外利益安全"],a:0},
+{q:"（ ）是保证，关系军队的性质、宗旨、本色。",o:["听党指挥","能打胜仗","作风优良","纪律严明"],a:2},
+{q:"如期实现建军一百年奋斗目标，加快把人民军队建成世界一流军队，是全面建设社会主义现代化国家的战略要求。作为建军之本、强军之魂的是（ ）。",o:["全面加强练兵备战","党对人民军队的绝对领导","建设强大军队","军委主席负责制"],a:1},
+{q:"新的征程上，开创国防和军队现代化新局面，必须全面推进政治建军、改革强军、科技强军、人才强军依法治军，加快把人民军队建设成为世界一流军队，以更强大的能力、更可靠的手段捍卫国家主权、安全、发展利益。其中，作为人民军队立军之本的是（ ）。",o:["政治建军","改革强军","科技强军","人才强军"],a:0},
+{q:"加快推进国防和军队现代化，既需要坚持党对人民军队的绝对领导，也需要坚持政治建军、改革强军、科技强军、人才强军、（ ）。",o:["依规治军","以德治军","依法治军","以严治军"],a:2},
+{q:"（ ）是核心战斗力，是军事发展中最活跃、最具革命性的因素。",o:["政治","思想","理念","科技"],a:3},
+{q:"（ ）是核心，反映军队的根本职能和军队建设的根本指向。",o:["听党指挥","能打胜仗","作风优良","纪律严明"],a:1},
+{q:"坚持党对人民军队的绝对领导必须有一套制度作保证，其中（ ）是坚持党对人民军队绝对领导的根本制度和根本实现形式，在党领导军队的一整套制度体系中处于最高层次、居于统领地位。",o:["军委主席负责制","党委（支部）统一的集体领导","政治委员制","政治机关制"],a:0},
+{q:"（ ）是香港、澳门回归后保持长期繁荣稳定的最佳制度安排。",o:["“和平统一”","“一国两制”","高度自治","资本主义制度"],a:1},
+{q:"准确把握“一国两制”的科学内涵，需要准确理解坚持中央全面管治权和保障特别行政区高度自治权相统一的含义。下列关于中央全面管治权和保障特别行政区高度自治权的关系说法错误的是（ ）。",o:["全面管治权和高度自治权在本质上是统一的","高度自治权就是完全自治权","高度自治权是中央行使全面管治权的体现","全面管治权是授权高度自治的基础"],a:1},
+{q:"“一国两制”伟大构想，最早是针对（ ）提出来的。",o:["台湾问题","香港问题","澳门问题","南海问题"],a:0},
+{q:"“一国两制”是中国共产党领导人民实现祖国和平统一的一项重要制度，是国家的一项基本国策。“一国两制”的根本宗旨是（ ）。",o:["依法治港治澳","保证香港澳门的资本主义制度长期不变","保证“爱国者治港”“爱国者治澳”","维护国家主权、安全、发展利益"],a:3},
+{q:"依法治港治澳，是全面依法治国的应有之义，是全面准确贯彻“一国两制”方针的自由之路。（ ）是国家根本大法，是特别行政区制度的法律渊源。",o:["宪法","选举法","立法法","基本法"],a:0},
+{q:"解决台湾问题、实现祖国完全统一，是全体中华儿女共同愿望，是中华民族根本利益所在。党的十八大以来，在以习近平同志为核心的党中央坚强领导下，在两岸同胞共同努力下，两岸关系取得重要积极成果。两岸关系和平发展的政治基础是（ ）。",o:["坚持“九二共识”，反对台独","相互尊重，求同存异","增强两岸同胞的民族认同、文化认同、国家认同","深化两岸利益融合，共创两岸互利双赢，增进两岸同胞福祉"],a:0},
+{q:"1997年7月1日，中国政府对香港恢复行使主权，香港特别行政区成立，香港特别行政区基本法开始实施。香港进入“一国两制”“港人治港”高度自治的历史新纪元。香港特别行政区的高度自治权是（ ）。",o:["特别行政区的完全自治","中央授权之外的剩余权力","特别行政区本身固有的权力","中央授予的地方事务管理权"],a:3},
+{q:"进入新时代，我国面临的国际环境和外交工作担负的使命任务发生新变化，我国对外工作需要呈现新气象、实现新作为。我国对外工作的出发点和落脚点是（ ）。",o:["构建人类命运共同体","实现中华民族伟大复兴","建立新的政治经济新秩序","维护国家主权、安全、发展利益"],a:3},
+{q:"（ ），是我们党根据时代发展潮流和我国根本利益作出的战略抉择，是新时代中国外交的基本原则。",o:["维护世界和平","坚持合作共赢","构建人类命运共同体","坚持走和平发展道路"],a:3},
+{q:"（ ）是中国共产党的一个创举，也是中国外交的力量源泉。",o:["经济外交","人民外交","军事外交","大国外交"],a:1},
+{q:"（ ），是当代中国共产党人回答和解决关乎人类前途命运的时代之问的中国方案，是应对人类共同挑战、建设更加繁荣美好世界的人间正道，也是新时代对外工作的总目标。",o:["“一带一路”","推动构建人类命运共同体","美丽世界","合作共赢"],a:1},
+{q:"建设（ ）的世界，就要坚持交流互鉴，促进和而不同、兼收并蓄的文明交流，推动人类文明实现创造性发展。",o:["美丽清洁","共同繁荣","开放包容","普遍安全"],a:2},
+{q:"新时代党的建设的鲜明主题是（ ）。",o:["加强政治建设","加强思想建设","全面从严治党","加强制度建设"],a:2},
+{q:"党的作风就是党的形象，关系人心向背，关系党的生死存亡。作风问题的核心是（ ）。",o:["严明党的政治纪律","反腐败","党同人民群众的关系问题","反对官僚主义"],a:2},
+{q:"把（ ）作为一项伟大工程来推进，是我们党的一大创举，是我们党领导人民进行伟大社会革命的重要法宝。",o:["党的建设","统一战线","武装斗争","伟大斗争"],a:0},
+{q:"（ ）是新时代推进反腐败斗争的鲜明特征，既以治标遏制腐败势头，更注重治本夯实防腐的基础。",o:["软硬兼施","批评和自我批评","标本兼治","自我革命"],a:2},
+{q:"高度重视和不断加强党的自身建设，是中国共产党从小到大、由弱变强，从挫折中奋起，在战胜困难中不断成熟的一大法宝，也是党领导的伟大事业不断取得胜利的根本保证。中国特色社会主义进入新时代，党的建设的根本方针是（ ）。",o:["全面加强党的执政本领","坚持党要管党、全面从严治党","坚持解放思想、改革创新","全面推进党的政治建设"],a:1},
+{q:"坚持反腐败无禁区、全覆盖、零容忍，坚定不移“打虎”“拍蝇”“猎狐”，____的目标初步实现，____的笼子越扎越牢，____的堤坝正在构筑，反腐败斗争压倒性态势已经形成并巩固发展。",o:["不敢腐、不能腐、不想腐","不能腐、不敢腐、不想腐","不想腐、不敢腐、不能腐","不敢腐、不想腐、不能腐"],a:0},
+{q:"为实现永葆党的先进性和纯洁性，毛泽东同志找到的道路是____，其内涵是____。",o:["自律；自我约束","民主；让人民监督政府","自省；批评和自我批评","监督；建立纪委监督机制"],a:1},
+{q:"新形势下党面临“四大考验”是（ ）。",o:["廉政建设考验、经济改革考验、社会治理考验、社会转型考验","执政考验、改革开放考验、市场经济考验、外部环境考验","政治建设的考验、经济建设的考验、文化建设的考验、生态建设的考验","道路自信、理论自信、制度自信、文化自信"],a:1},
+{q:"深入推进新时代党的建设新的伟大工程，必须注重系统性整体性协同性，以（ ）为统领持续抓好党的各方面建设。",o:["作风建设","思想建设","组织建设","政治建设"],a:3},
+{q:"把（ ）纳入党的建设总体布局并摆在首位，是新时代我们党对马克思主义党建理论的重大创新，体现了我们党对共产党执政规律的深刻认识，有着充分的理论和实践依据。",o:["组织建设","思想建设","作风建设","政治建设"],a:3},
+{q:"经过百年奋斗特别是党的十八大以来新的实践，党找到了跳出历史周期率的第二个答案，这就是（ ）。",o:["自我革命","社会革命","新发展理念","总体国家安全观"],a:0},
+{q:"（ ），是党的政治建设的首要任务。",o:["增强“四个意识”","贯彻“四个全面”","坚定“四个自信”","保证全党服从中央，维护党中央权威和集中统一领导"],a:2},
+{q:"勇于自我革命就是要同一切影响党的先进性、弱化党的纯洁性的问题坚决斗争，实现自我净化、自我完善、自我革新、自我提高。其中（ ）就是要善于调动全党积极性、主动性、创造性，坚决破除一切不合时宜的思想观念和体制机制弊端，通过改革和制度创新压缩腐败现象生存空间和滋生土壤，营造风清气正的政治生态。",o:["自我净化","自我完善","自我革新","自我提高"],a:3}
+];
+const KEY=['A','B','C','D'];
+
+/* ===== 状态 ===== */
+let wrongBook = load('sxzz_wrongbook',[]).filter(n=>n>=0&&n<QUESTIONS.length);
+let stats = load('sxzz_stats',{ok:0,no:0});
+let cur = 0;            // 全部练习当前题
+let wpos = 0;           // 错题本当前显示下标
+let pAnswered = false;  // 当前是否已作答
+let wAnswered = false;
+
+function load(k,d){ try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;} }
+function save(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+function saveWrong(){ save('sxzz_wrongbook',wrongBook); document.getElementById('wrongBadge').textContent=wrongBook.length; }
+
+/* ===== 视图切换 ===== */
+function switchView(v){
+  document.getElementById('practiceView').style.display = v==='practice'?'block':'none';
+  document.getElementById('wrongView').style.display = v==='wrong'?'block':'none';
+  document.getElementById('testView').style.display = v==='test'?'block':'none';
+  document.getElementById('tabPractice').className='tab'+(v==='practice'?' active':'');
+  document.getElementById('tabWrong').className='tab'+(v==='wrong'?' active':'');
+  document.getElementById('tabTest').className='tab'+(v==='test'?' active':'');
+  if(v==='practice'){ renderPractice(); }
+  else if(v==='wrong'){ renderWrong(); }
+  else { renderTest(); }
+}
+
+/* ===== 全部练习 ===== */
+function renderPractice(){
+  const q=QUESTIONS[cur];
+  document.getElementById('progText').textContent='第 '+(cur+1)+' / '+QUESTIONS.length+' 题';
+  document.getElementById('progBar').style.width=((cur+1)/QUESTIONS.length*100)+'%';
+  document.getElementById('statOk').textContent=stats.ok;
+  document.getElementById('statNo').textContent=stats.no;
+  pAnswered=false;
+  let html='<div class="qno">第 '+(cur+1)+' 题</div><div class="stem">'+q.q+'</div><div class="opts">';
+  for(let i=0;i<4;i++){
+    html+='<div class="opt" id="pOpt'+i+'" onclick="answerP('+i+')"><span class="key">'+KEY[i]+'</span><span>'+q.o[i]+'</span></div>';
+  }
+  html+='</div><div class="feedback" id="pFb"></div><div class="actions" id="pActs" style="display:none">'+
+        '<button class="btn btn-book" id="pBookBtn" onclick="addWrongManually()">加入错题本</button>'+
+        '<button class="btn btn-next" onclick="nextP()">下一题</button></div>';
+  document.getElementById('qCard').innerHTML=html;
+  renderJumpSel();
+}
+
+function renderJumpSel(){
+  const sel=document.getElementById('jumpSel'); sel.innerHTML='';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const op=document.createElement('option'); op.value=i; op.textContent=(i+1);
+    if(i===cur) op.selected=true;
+    sel.appendChild(op);
+  }
+}
+function jumpTo(v){ cur=parseInt(v,10); renderPractice(); }
+
+function answerP(i){
+  if(pAnswered) return;
+  pAnswered=true;
+  const q=QUESTIONS[cur];
+  const optEls=[0,1,2,3].map(x=>document.getElementById('pOpt'+x));
+  const right=q.a===i;
+  optEls.forEach((el,j)=>{
+    el.classList.add('disabled');
+    if(j===q.a){ el.classList.add('correct'); }
+    else if(j===i){ el.classList.add('wrong'); }
+    else { el.classList.add('dim'); }
+  });
+  if(right){ stats.ok++; } else { stats.no++; wrongBook=addUniq(wrongBook,cur); saveWrong(); }
+  save('sxzz_stats',stats);
+  document.getElementById('statOk').textContent=stats.ok;
+  document.getElementById('statNo').textContent=stats.no;
+  const fb=document.getElementById('pFb');
+  fb.className='feedback '+(right?'right':'wrong');
+  fb.innerHTML = right? '回答正确！' : '回答错误（已自动加入错题本）';
+  fb.innerHTML += '<div class="truenote">正确答案：'+KEY[q.a]+' · '+q.o[q.a]+'</div>';
+  document.getElementById('pActs').style.display='flex';
+  updatePBookBtn();
+}
+
+function updatePBookBtn(){
+  const b=document.getElementById('pBookBtn');
+  const inBook=wrongBook.indexOf(cur)>=0;
+  b.textContent=inBook?'已在错题本':'加入错题本';
+  b.className='btn btn-book'+(inBook?' inbook':'');
+  b.disabled=inBook;
+}
+
+function addWrongManually(){ wrongBook=addUniq(wrongBook,cur); saveWrong(); updatePBookBtn(); }
+
+function nextP(){
+  if(cur+1<QUESTIONS.length){ cur++; }
+  else { cur=0; }
+  renderPractice();
+}
+
+/* ===== 错题本 ===== */
+function renderWrong(){
+  const box=document.getElementById('wrongCard');
+  document.getElementById('wrongInfo').textContent='共 '+wrongBook.length+' 道错题';
+  if(wrongBook.length===0){ wpos=0;
+    box.innerHTML='<div class="card empty"><div class="big">📖</div>错题本还是空的<br>答错的题会自动加入这里，也可以手动收藏。</div>';
+    return;
+  }
+  if(wpos<0||wpos>=wrongBook.length) wpos=0;
+  const idx=wrongBook[wpos];
+  const q=QUESTIONS[idx];
+  wAnswered=false;
+  let html='<div class="card"><div class="qno">错题 '+(wpos+1)+' / '+wrongBook.length+'（原第 '+(idx+1)+' 题）</div>'+
+        '<div class="stem">'+q.q+'</div><div class="opts">';
+  for(let i=0;i<4;i++){
+    html+='<div class="opt" id="wOpt'+i+'" onclick="answerW('+i+')"><span class="key">'+KEY[i]+'</span><span>'+q.o[i]+'</span></div>';
+  }
+  html+='</div><div class="feedback" id="wFb"></div>'+
+        '<div class="actions" id="wActs" style="display:none"></div></div>';
+  box.innerHTML=html;
+}
+
+function answerW(i){
+  if(wAnswered) return;
+  wAnswered=true;
+  const idx=wrongBook[wpos];
+  const q=QUESTIONS[idx];
+  const optEls=[0,1,2,3].map(x=>document.getElementById('wOpt'+x));
+  const right=q.a===i;
+  optEls.forEach((el,j)=>{
+    el.classList.add('disabled');
+    if(j===q.a) el.classList.add('correct');
+    else if(j===i) el.classList.add('wrong');
+    else el.classList.add('dim');
+  });
+  const fb=document.getElementById('wFb');
+  const acts=document.getElementById('wActs');
+  fb.className='feedback '+(right?'right':'wrong');
+  fb.innerHTML = right? '回答正确！' : '还是答错了，继续刷。';
+  fb.innerHTML += '<div class="truenote">正确答案：'+KEY[q.a]+' · '+q.o[q.a]+'</div>';
+  acts.innerHTML='<button class="btn btn-remove" id="wRemoveBtn" onclick="removeWrongCurrent()">移出错题本</button>'+
+                 '<button class="btn btn-next" onclick="nextW()">下一道错题</button>';
+  acts.style.display='flex';
+}
+
+function removeWrongCurrent(){
+  wrongBook.splice(wpos,1);
+  saveWrong();
+  if(wrongBook.length===0){ wpos=0; renderWrong(); return; }
+  if(wpos>=wrongBook.length) wpos=0;
+  renderWrong();
+}
+
+function nextW(){
+  if(wrongBook.length===0){ renderWrong(); return; }
+  wpos=(wpos+1)%wrongBook.length;
+  renderWrong();
+}
+
+function clearWrong(){
+  if(!confirm('确定清空错题本吗？此操作不可撤销。')) return;
+  wrongBook=[]; wpos=0; saveWrong(); renderWrong();
+}
+
+function addUniq(arr,v){ return arr.indexOf(v)>=0?arr:arr.concat([v]); }
+
+/* ===== 限时自测 ===== */
+const TEST_TOTAL = 20;
+let history = load('sxzz_history',[]);
+let tOrder=[], tIdx=0, tCorrect=0, tSeconds=0, tTimer=null, tAnswered=false, tShowHistory=false;
+
+function fmtTime(s){
+  const h=Math.floor(s/3600), m=Math.floor(s%3600/60), sec=s%60;
+  const mm=String(m).padStart(2,'0'), ss=String(sec).padStart(2,'0');
+  return h>0 ? h+':'+mm+':'+ss : mm+':'+ss;
+}
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function startTest(){
+  const idxs=shuffle([...Array(QUESTIONS.length).keys()]).slice(0,TEST_TOTAL);
+  tOrder=idxs; tIdx=0; tCorrect=0; tSeconds=0; tAnswered=false; tShowHistory=false;
+  if(tTimer) clearInterval(tTimer);
+  tTimer=setInterval(function(){ tSeconds++; const d=document.getElementById('tTimerDisp'); if(d) d.textContent=fmtTime(tSeconds); },1000);
+  renderTest();
+}
+function stopTimer(){ if(tTimer){ clearInterval(tTimer); tTimer=null; } }
+
+function renderTest(){
+  if(tShowHistory){ renderHistory(); return; }
+  if(tOrder.length===0){ renderTestIdle(); return; }
+  if(tIdx>=tOrder.length){ renderTestResult(); return; }
+  renderTestQuestion();
+}
+
+function renderTestIdle(){
+  document.getElementById('testCard').innerHTML=
+    '<div class="card"><div class="testbar"><span class="tlabel">限时自测</span></div>'+
+    '<div class="stem">随机抽取 '+TEST_TOTAL+' 道题，正计时答题，测一测你的答题用时。</div>'+
+    '<div class="note-line">· 每题 1 分，共 '+TEST_TOTAL+' 分<br>· 计时从点击「开始」起持续走表，中途切到别的页签也会继续计时<br>· 答完自动显示成绩并存入历史记录</div>'+
+    '<div class="actions"><button class="btn btn-next" onclick="startTest()">开始限时自测</button>'+
+    '<button class="btn btn-ghost" onclick="showTestHistory()">查看历史记录</button></div></div>';
+}
+
+function renderTestQuestion(){
+  const q=QUESTIONS[tOrder[tIdx]];
+  tAnswered=false;
+  let html='<div class="testbar"><span>第 '+(tIdx+1)+' / '+TEST_TOTAL+' 题</span>'+
+        '<span style="margin-left:auto">用时 <span class="timer" id="tTimerDisp">'+fmtTime(tSeconds)+'</span></span></div>'+
+        '<div class="card"><div class="qno">自测 · 第 '+(tIdx+1)+' 题</div><div class="stem">'+q.q+'</div><div class="opts">';
+  for(let i=0;i<4;i++){ html+='<div class="opt" id="tOpt'+i+'" onclick="answerT('+i+')"><span class="key">'+KEY[i]+'</span><span>'+q.o[i]+'</span></div>'; }
+  html+='</div><div class="feedback" id="tFb"></div>'+
+        '<div class="actions" id="tActs" style="display:none"></div></div>';
+  document.getElementById('testCard').innerHTML=html;
+}
+
+function answerT(i){
+  if(tAnswered) return;
+  tAnswered=true;
+  const q=QUESTIONS[tOrder[tIdx]];
+  const right=q.a===i;
+  const els=[0,1,2,3].map(x=>document.getElementById('tOpt'+x));
+  els.forEach((el,j)=>{ el.classList.add('disabled'); if(j===q.a)el.classList.add('correct'); else if(j===i)el.classList.add('wrong'); else el.classList.add('dim'); });
+  if(right) tCorrect++;
+  const fb=document.getElementById('tFb');
+  fb.className='feedback '+(right?'right':'wrong');
+  fb.innerHTML=(right?'回答正确':'回答错误')+'（第 '+(tIdx+1)+'/'+TEST_TOTAL+' 题）';
+  fb.innerHTML+='<div class="truenote">正确答案：'+KEY[q.a]+' · '+q.o[q.a]+'</div>';
+  const acts=document.getElementById('tActs');
+  acts.innerHTML = (tIdx+1<TEST_TOTAL)
+    ? '<button class="btn btn-next" onclick="nextT()">下一题</button>'
+    : '<button class="btn btn-next" onclick="nextT()">完成并查看成绩</button>';
+  acts.style.display='flex';
+}
+
+function nextT(){
+  if(tIdx+1<TEST_TOTAL){ tIdx++; renderTestQuestion(); }
+  else { finishTest(); }
+}
+
+function finishTest(){
+  stopTimer();
+  history.unshift({t:Date.now(), score:tCorrect, seconds:tSeconds});
+  history=history.slice(0,100);
+  save('sxzz_history',history);
+  tIdx=TEST_TOTAL;
+  renderTestResult();
+}
+
+function renderTestResult(){
+  const rate=Math.round(tCorrect/TEST_TOTAL*100);
+  document.getElementById('testCard').innerHTML=
+    '<div class="card summary"><div class="qno" style="background:#9a0000">限时自测 · 已完成</div>'+
+    '<div class="scorebig">'+tCorrect+' / '+TEST_TOTAL+'</div>'+
+    '<div class="rate">得分 '+tCorrect+' 分 · 正确率 '+rate+'% · 用时 '+fmtTime(tSeconds)+'</div>'+
+    '<div class="actions" style="justify-content:center">'+
+    '<button class="btn btn-next" onclick="startTest()">再测一次</button>'+
+    '<button class="btn btn-ghost" onclick="showTestHistory()">查看历史记录</button>'+
+    '<button class="btn btn-ghost" onclick="switchView(\'practice\')">返回全部练习</button></div></div>';
+}
+
+function showTestHistory(){ tShowHistory=true; renderTest(); }
+function backFromHistory(){ tShowHistory=false; renderTest(); }
+
+function renderHistory(){
+  let rows='';
+  if(history.length===0){
+    rows='<tr><td colspan="5" style="color:var(--gray)">还没有限时自测记录</td></tr>';
+  } else {
+    history.forEach(function(r,i){
+      const d=new Date(r.t);
+      const ds=String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+      const rate=Math.round(r.score/TEST_TOTAL*100);
+      rows+='<tr><td>'+ds+'</td><td>'+r.score+' / '+TEST_TOTAL+'</td><td>'+rate+'%</td><td>'+fmtTime(r.seconds)+'</td>'+
+        '<td class="hist-actions"><button class="btn-del" onclick="deleteRecord('+i+')">删除</button></td></tr>';
+    });
+  }
+  document.getElementById('testCard').innerHTML=
+    '<div class="card"><div class="list-head" style="margin-bottom:6px"><h2>限时自测历史记录</h2>'+
+    '<button class="btn btn-ghost" style="margin-left:auto" onclick="backFromHistory()">返回</button></div>'+
+    '<div class="note-line" style="margin-bottom:10px">共 '+history.length+' 条记录 · 随机 20 题 · 每题 1 分</div>'+
+    '<table class="hist"><tr><th>时间</th><th>得分</th><th>正确率</th><th>用时</th><th>操作</th></tr>'+rows+'</table>'+
+    (history.length?'<div class="actions" style="justify-content:flex-end"><button class="btn btn-remove" onclick="clearHistory()">清空历史</button></div>':'')+
+    '</div>';
+}
+
+function deleteRecord(i){ history.splice(i,1); save('sxzz_history',history); renderHistory(); }
+function clearHistory(){ if(!confirm('确定清空所有限时自测记录吗？')) return; history=[]; save('sxzz_history',history); renderHistory(); }
+
+/* ===== 设置：修改答案 ===== */
+let adminIdx=0;
+function toggleAdmin(){
+  const p=document.getElementById('adminPanel');
+  if(p.classList.contains('show')){
+    p.classList.remove('show');
+  }else{
+    const qs=document.getElementById('adminQ'); qs.innerHTML='';
+    for(let i=0;i<QUESTIONS.length;i++){ const op=document.createElement('option'); op.value=i; op.textContent='第 '+(i+1)+' 题'; qs.appendChild(op); }
+    qs.value=adminIdx;
+    document.getElementById('adminA').value=QUESTIONS[adminIdx].a;
+    p.classList.add('show');
+  }
+}
+function onAdminQ(v){ adminIdx=parseInt(v,10); document.getElementById('adminA').value=QUESTIONS[adminIdx].a; }
+function saveAdmin(){
+  const a=parseInt(document.getElementById('adminA').value,10);
+  QUESTIONS[adminIdx].a=a;
+  save('sxzz_answers',QUESTIONS.map(q=>q.a));
+  toggleAdmin();
+  renderPractice();
+  if(document.getElementById('wrongView').style.display==='block') renderWrong();
+}
+document.getElementById('adminQ').addEventListener('change',e=>onAdminQ(e.target.value));
+
+/* 启动：如存在用户修改过的答案记录则应用 */
+(function(){
+  const saved=load('sxzz_answers',null);
+  if(saved&&saved.length===QUESTIONS.length){ for(let i=0;i<QUESTIONS.length;i++){ if(saved[i]>=0&&saved[i]<4) QUESTIONS[i].a=saved[i]; } }
+  renderJumpSel();
+  renderPractice();
+  saveWrong();
+})();
+</script>
+</body>
+</html>
